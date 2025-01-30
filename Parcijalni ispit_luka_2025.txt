@@ -1,0 +1,78 @@
+Napomene za parcijalni: 
+
+Otiđite na repozitorij: https://github.com/algebra-training/parcijalni-ispit
+
+
+1. Napraviti Fork (dobiti kopiju repozitorija unutar svoje domene).
+To ćete učiniti tako da otvorite repozitorij vlasnika projekta i kliknete na gumb "Fork" u gornjem desnom kutu stranice. To će stvoriti kopiju repozitorija na vašem GitHub računu.
+2. Klonirajte svoj fork s prozvoljnim imenom fork repozitorija:
+git clone https://github.com/vaš-korisnički-naziv/fork-ime-repozitorija.git
+i nakon toga uđite u klonirani direktorij: 
+cd fork-ime-repozitorija
+3. Napravite novi branch s vašim imenom i prezimenom i checkoutajte se na njega. 
+git checkout -b ime-prezime
+4. instalirajte zavisnosti iz package.json-a i nakon toga bilo koji novi npm paket kako bi se isti zapisao u package.json datoteku i pokrenite aplikaciju, npr: 
+npm install random -save
+node app.js
+U browseru upišite: http://localhost:3000/
+ctrl + c u terminalu prekida izvođenje
+5. stvorite .gitignore datoteku kako bi spriječili da node_modules direktorij završi na GitHubu
+6. Dodajte paragraf u kojem se nalazi vaše ime i prezime u index.html
+7. sve promjene dodajte u stage i commitajte s porukom "Ime Prezime: Parcijalni Ispit"
+git add .
+git commit -m "Ime Prezime: Parcijalni Ispit"
+8. Pushajte novu granu:
+git push --set-upstream origin ime-prezime
+9. Pošaljite predavaču URL repozitorija
+
+
+10. Deployajte svoju novu granu na GitHub pages i pošaljite predavaču URL deployane aplikacije. 
+
+
+****************************************************************************************************************************************************************************
+10. alternativa: 
+
+Deployajte aplikaciju (granu sa svog forkanog repozitorija) na MS Azure preko https://portal.azure.com/. 
+Ako deployate na Azure preko GitHuba i nemate testove napisane, maknite scriptu za pokretanje testova iz package.jsona jer će pasti build ili maknuti testiranje iz config fajle za deploy. 
+Možete deployati i koristeći arhivirane datoteke (zip), kako god vam je zgodnije.
+Pošaljite predavaču URL deployane aplikacije. 
+
+
+Možete isto napraviti koristeći Azure CLI (Command-Line Interface) za deployanje svoje web aplikacije na Microsoft Azure. 
+1. Instalirajte Azure CLI:
+
+Ako već nemate Azure CLI instaliran na svom računalu, preuzmite ga i instalirajte s službene web stranice: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+2. Prijavite se u Azure:
+Otvorite terminal (naredbeni redak) i izvršite sljedeću naredbu kako biste se prijavili u Azure račun:
+az login
+Slijedite upute za prijavu pomoću preglednika i autorizaciju na svoj Azure račun.
+3. Stvorite novi resursni skup (Resource Group):
+Koristite sljedeću naredbu kako biste stvorili novi resursni skup (zamijenite <naziv-resursnog-skupa> s željenim nazivom):
+az group create --name <naziv-resursnog-skupa> --location <lokacija>
+4. Stvorite Azure App Service:
+Koristite sljedeću naredbu kako biste stvorili novu Azure App Service (zamijenite <naziv-aplikacije> i <naziv-resursnog-skupa>):
+az webapp create --name <naziv-aplikacije> --resource-group <naziv-resursnog-skupa> --plan <naziv-planiranog-aplikacijskog-plan> --runtime "<runtime>"
+Ovdje <naziv-planiranog-aplikacijskog-plan> označava naziv plana (npr. "MyPlan") i <runtime> označava vrstu aplikacijskog stoga (npr. "NODE|10.14" za Node.js 10.14).
+5. Postavite konfiguraciju:
+az webapp config appsettings set --name <naziv-aplikacije> --resource-group <naziv-resursnog-skupa> --settings WEBSITE_NODE_DEFAULT_VERSION=10.14.1
+6. Deployajte svoju aplikaciju iz GitHub repozitorija:
+Koristite sljedeću naredbu kako biste deployali svoju aplikaciju iz GitHub repozitorija (zamijenite <naziv-aplikacije> i <GitHub-repo-url>):
+
+az webapp deployment source config --name <naziv-aplikacije> --resource-group <naziv-resursnog-skupa> --repo-url <GitHub-repo-url> --branch master --manual-integration
+7. Automatski ili ručno pokrenite deploy:
+
+Ovisno o konfiguraciji, možete automatski pokrenuti deploy iz GitHub repozitorija korištenjem Azure Portal-a ili ručno iz terminala koristeći Azure CLI. Automatski deploy će se izvršiti nakon svakog pusha u GitHub repozitorij.
+Da biste ručno pokrenuli deploy svoje web aplikacije na Microsoft Azure koristeći Azure CLI, možete koristiti sljedeću naredbu:
+az webapp deployment source sync --name <naziv-aplikacije> --resource-group <naziv-resursnog-skupa>
+
+Ovdje zamijenite <naziv-aplikacije> s nazivom vaše Azure Web App i <naziv-resursnog-skupa> s nazivom resursne grupe u kojoj se nalazi vaša aplikacija.
+
+Nakon izvršavanja ove naredbe, Azure CLI će ručno pokrenuti proces sinkronizacije izvornog koda (deployanja) za vašu aplikaciju na Azure Web App. Ovo će osigurati da se najnovije promjene iz vašeg Git repozitorija implementiraju na vašoj aplikaciji.
+
+Nakon završetka procesa implementacije, možete provjeriti svoju web aplikaciju kako biste se uvjerili da su promjene uspješno primijenjene.
+
+8. Pristup Aplikaciji:
+
+Nakon što je deployanje završeno, možete pristupiti svojoj web aplikaciji putem URL-a koji će vam Azure pružiti.
+
+9. Pošaljite predavaču URL deploayane aplikacije
